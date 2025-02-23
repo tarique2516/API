@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Skill Extractor</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <!-- Bootstrap Bundle (JS) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      background: linear-gradient(to right, #667eea, #764ba2);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+    }
+    /* Enhanced Navigation Bar */
+    .navbar {
+      background: linear-gradient(to right, #4a47a3, #667eea);
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+      padding: 10px 20px;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: white !important;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+    }
+    .navbar-brand i {
+      margin-right: 10px;
+      font-size: 28px;
+    }
+    .nav-link {
+      color: white !important;
+      font-weight: 500;
+      margin: 0 10px;
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: all 0.3s ease-in-out;
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: white;
+      transition: all 0.3s ease-in-out;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+      left: 0;
+    }
+    .nav-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+    .navbar-toggler {
+      border: none;
+      outline: none;
+    }
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+    }
+
+    /* Container */
+    .container {
+      max-width: 700px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      margin-top: 30px;
+      color: #333;
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: bold;
+      color: #4a47a3;
+      font-size: 28px;
+    }
+
+    /* Upload Box */
+    .upload-box {
+      border: 2px dashed #4a47a3;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      background: #f8f9fa;
+      transition: all 0.3s ease-in-out;
+    }
+    .upload-box:hover {
+      background: #e9ecef;
+      transform: scale(1.02);
+    }
+    /* Buttons */
+    .btn-primary {
+      width: 100%;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.3s ease-in-out;
+    }
+    .btn-primary:hover {
+      background: #4a47a3;
+      transform: translateY(-2px);
+    }
+
+    /* List Group Items */
+    .list-group-item {
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease-in-out;
+    }
+    .list-group-item:hover {
+      background: #f1f1f1;
+      transform: translateX(5px);
+    }
+    .badge {
+      background: #4a47a3;
+      font-size: 12px;
+    }
+
+    /* Pre Tag */
+    pre {
+      background: #f1f1f1;
+      padding: 10px;
+      border-radius: 5px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-size: 12px;
+    }
+
+    /* Job Card */
+    .job-card {
+      background: #fff;
+      border: 1px solid #eaeaea;
+      transition: all 0.3s ease;
+    }
+    .job-card:hover {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      transform: translateY(-2px);
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .navbar-brand {
+        font-size: 20px;
+      }
+      .navbar-brand i {
+        font-size: 24px;
+      }
+      .nav-link {
+        font-size: 14px;
+        margin: 0 5px;
+        padding: 6px 10px;
+      }
+      .container {
+        padding: 15px;
+        margin-top: 20px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      .upload-box {
+        padding: 10px;
+      }
+      .btn-primary {
+        font-size: 14px;
+      }
+      .list-group-item {
+        font-size: 12px;
+      }
+      pre {
+        font-size: 10px;
+      }
+    }
+    @media (max-width: 480px) {
+      .navbar-brand {
+        font-size: 18px;
+      }
+      .navbar-brand i {
+        font-size: 22px;
+      }
+      .nav-link {
+        font-size: 12px;
+        margin: 0 3px;
+        padding: 5px 8px;
+      }
+      .container {
+        padding: 10px;
+        margin-top: 15px;
+      }
+      h1 {
+        font-size: 20px;
+      }
+      .upload-box {
+        padding: 8px;
+      }
+      .btn-primary {
+        font-size: 12px;
+      }
+      .list-group-item {
+        font-size: 10px;
+      }
+      pre {
+        font-size: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-file-alt"></i> Resume Skill Extractor
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-user"></i> Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-address-book"></i> Contacts</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h1 class="text-center"><i class="fas fa-file-upload"></i> Resume Skill Extractor</h1>
+
+    <!-- Error Message Display -->
+    {% if error_message %}
+    <div class="alert alert-danger" role="alert">
+      <strong>Error:</strong> {{ error_message }}
+    </div>
+    {% endif %}
+
+    <!-- Predicted Job Role Display -->
+    {% if predicted_job %}
+    <div class="alert alert-success" role="alert">
+      <strong>Predicted Job Role:</strong> {{ predicted_job }}
+    </div>
+    {% endif %}
+
+    <!-- Extracted Skills Display -->
+    {% if extracted_skills and extracted_skills|length > 0 %}
+    <div class="mt-4">
+      <h2><i class="fas fa-lightbulb"></i> Extracted Skills</h2>
+      <ul class="list-group">
+        {% for skill in extracted_skills %}
+        <li class="list-group-item">
+          {{ skill }} <span class="badge bg-primary">{{ loop.index }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <!-- Recommended Skills Display -->
+    {% if missing_skills and missing_skills|length > 0 %}
+    <div class="mt-4">
+      <h2><i class="fas fa-tools"></i> Recommended Skills for the Job Role Predicted</h2>
+      <ul class="list-group">
+        {% for skill in missing_skills %}
+        <li class="list-group-item list-group-item-warning">
+          {{ skill }}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <!-- Job Listings (Card-Style) -->
+    {% if job_list and job_list|length > 0 %}
+    <div class="mt-4">
+      <h2><i class="fas fa-briefcase"></i> Job Listings</h2>
+
+      {% for job in job_list %}
+      <!-- Job Card -->
+      <div class="job-card p-3 mb-3 rounded">
+        <!-- Title & Rating/Reviews -->
+        <div class="d-flex justify-content-between align-items-center">
+          <h4 class="mb-0" style="font-size: 1.25rem;">
+            {{ job.job_title or "N/A" }}
+          </h4>
+          {% if job.rating and job.reviews_count %}
+          <span class="badge bg-light text-dark">
+            <i class="fas fa-star text-warning"></i>
+            {{ job.rating }} | {{ job.reviews_count }} Reviews
+          </span>
+          {% endif %}
+        </div>
+
+        <!-- Company -->
+        <p class="text-muted mb-1" style="font-size: 0.95rem;">
+          {{ job.employer_name or "Unknown Company" }}
+        </p>
+
+        <!-- Location -->
+        <p class="text-muted mb-2" style="font-size: 0.9rem;">
+          <i class="fas fa-map-marker-alt"></i> {{ job.job_city or "Location not specified" }}
+        </p>
+
+        <!-- Job Description -->
+        <p class="text-muted mb-2" style="font-size: 0.9rem;">
+          {{ job.job_description or "No description provided." }}
+        </p>
+
+        <!-- Footer (Posted Date + Action Buttons) -->
+        <div class="d-flex justify-content-between align-items-center">
+          <!-- Posted Date -->
+          {% if job.posted_date %}
+          <small class="text-muted">{{ job.posted_date }}</small>
+          {% else %}
+          <small class="text-muted">N/A</small>
+          {% endif %}
+
+          <div>
+            <!-- Save Button -->
+            <button class="btn btn-outline-primary btn-sm me-2">
+              <i class="fas fa-bookmark"></i> Save
+            </button>
+            <!-- Apply Button -->
+            {% if job.job_link %}
+            <a class="btn btn-primary btn-sm" 
+               href="{{ job.job_link }}" 
+               target="_blank" 
+               rel="noopener noreferrer">
+              Apply
+            </a>
+            {% else %}
+            <button class="btn btn-primary btn-sm" disabled>
+              Apply
+            </button>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Extracted Text Display -->
+    {% if extracted_text %}
+    <div class="mt-4">
+      <h2><i class="fas fa-align-left"></i> Extracted Text</h2>
+      <pre>{{ extracted_text }}</pre>
+    </div>
+    {% endif %}
+
+    <!-- Resume Upload Form -->
+    <form action="/" method="POST" enctype="multipart/form-data" class="mt-4">
+      <div class="upload-box" onclick="document.getElementById('resume').click()">
+        <p><i class="fas fa-cloud-upload-alt fa-2x"></i></p>
+        <p>Click to upload your resume (PDF/DOCX)</p>
+        <input type="file" class="form-control d-none" id="resume" name="resume" accept=".pdf,.docx" required>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-search"></i> Process/Analyze</button>
+    </form>
+  </div>
+
+  <!-- JavaScript to Handle File Selection -->
+  <script>
+    document.getElementById('resume').addEventListener('change', function() {
+      document.querySelector('.upload-box p').innerText = this.files[0].name;
+    });
+  </script>
+</body>
+</html>
